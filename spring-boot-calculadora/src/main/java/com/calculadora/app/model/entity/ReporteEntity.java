@@ -11,9 +11,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.calculadora.app.utils.FormatTime;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 @Entity
 @Table(name = "reporte")
-public class Reporte implements Serializable {
+public class ReporteEntity implements Serializable {
 
 	private static final long serialVersionUID = 4967269355992515028L;
 
@@ -28,15 +32,19 @@ public class Reporte implements Serializable {
 	private String idServicio;
 
 	@NotNull
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate fechaInicio;
 
 	@NotNull
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate fechaFin;
 
 	@NotEmpty
+	@FormatTime
 	private String horaInicio;
 
 	@NotEmpty
+	@FormatTime
 	private String horaFin;
 
 	public Long getIdReporte() {

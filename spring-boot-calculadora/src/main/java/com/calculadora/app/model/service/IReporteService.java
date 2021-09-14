@@ -1,11 +1,9 @@
 package com.calculadora.app.model.service;
 
-import java.util.Map;
-
-import com.calculadora.app.model.entity.Reporte;
+import com.calculadora.app.model.entity.ReporteEntity;
 
 public interface IReporteService {
-    public Reporte save(Reporte reporte);
-    
-    public Map<String, String> validateDate(Reporte reporte);
+	public ReporteEntity save(ReporteEntity reporteEntity);
+
+	public Boolean validateDate(ReporteEntity reporteEntity);
 }

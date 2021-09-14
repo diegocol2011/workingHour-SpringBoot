@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.calculadora.app.model.entity.Reporte;
+import com.calculadora.app.model.entity.ReporteEntity;
 import com.calculadora.app.model.service.IReporteService;
 
 @RestController
@@ -23,9 +23,10 @@ public class ReporteController {
 	private IReporteService reporteService;
 
 	@PostMapping("/guardar")
-	public ResponseEntity<Reporte> guardarReporte(@Valid @RequestBody Reporte reporte) {
-		reporteService.validateDate(reporte);
+	public ResponseEntity<ReporteEntity> guardarReporte(@Valid @RequestBody ReporteEntity reporteEntity) {
+		reporteService.validateDate(reporteEntity);
+
 		return ResponseEntity.created(URI.create("/api/")).contentType(MediaType.APPLICATION_JSON)
-				.body(reporteService.save(reporte));
+				.body(reporteService.save(reporteEntity));
 	}
 }

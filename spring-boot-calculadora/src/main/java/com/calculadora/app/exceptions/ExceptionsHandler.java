@@ -4,8 +4,8 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,16 +28,36 @@ public class ExceptionsHandler {
 		return errors;
 	}
 
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public Map<String, String> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
-		Map<String, String> errors = new HashMap<>();
+	/*
+	 * @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	 * 
+	 * @ExceptionHandler(HttpMessageNotReadableException.class) public Map<String,
+	 * String> handleHttpMessageNotReadableException(HttpMessageNotReadableException
+	 * exception) { Map<String, String> errors = new HashMap<>();
+	 * 
+	 * if
+	 * (exception.getMostSpecificCause().getClass().equals(DateTimeParseException.
+	 * class)) { errors.put("Fecha",
+	 * "Las fechas deben tener el formato yyyy-MM-dd"); return errors; } return
+	 * errors; }
+	 */
 
-		if (exception.getMostSpecificCause().getClass().equals(DateTimeParseException.class)) {
-			errors.put("Fecha", "Las fechas deben tener el formato yyyy-MM-dd");
-			return errors;
-		}
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(DateTimeParseException.class)
+	public Map<String, String> handleException(DateTimeParseException exception) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put("Message: ", "Las fechas deben tener el formato yyyy-MM-dd");
 		return errors;
+
+	}
+	
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(TypeMismatchException.class)
+	public Map<String, String> handleException(TypeMismatchException exception) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put("Message: ", "La fecha de inicio debe ser menor que la fecha de fin");
+		return errors;
+
 	}
 
 }
