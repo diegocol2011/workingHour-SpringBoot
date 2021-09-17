@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.calculadora.app.model.entity.ReporteEntity;
 
 @Component
-public class ValidationField {
+public final class ValidationField {
 
 	public static Boolean afterDate(ReporteEntity reporteEntity) {
 

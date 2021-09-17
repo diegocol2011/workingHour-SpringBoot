@@ -42,16 +42,17 @@ public class ExceptionsHandler {
 	 * errors; }
 	 */
 
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(DateTimeParseException.class)
 	public Map<String, String> handleException(DateTimeParseException exception) {
 		Map<String, String> errors = new HashMap<>();
-		errors.put("Message: ", "Las fechas deben tener el formato yyyy-MM-dd");
+		errors.put("Message: ", "Fecha debe tener formato yyyy-MM-dd"
+				+ "     Hora debe tener formato HH:MM");
 		return errors;
 
 	}
-	
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(TypeMismatchException.class)
 	public Map<String, String> handleException(TypeMismatchException exception) {
 		Map<String, String> errors = new HashMap<>();

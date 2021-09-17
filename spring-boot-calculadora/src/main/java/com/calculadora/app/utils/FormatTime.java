@@ -21,7 +21,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 public @interface FormatTime {
 
-	String message() default "{com.calculadora.app.utils.formattime.message}";
+	String message() default "";
 
 	Class<?>[] groups() default {};
 

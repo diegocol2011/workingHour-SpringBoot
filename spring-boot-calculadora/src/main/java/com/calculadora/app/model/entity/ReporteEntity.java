@@ -2,6 +2,7 @@ package com.calculadora.app.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import com.calculadora.app.utils.FormatTime;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 @Entity
 @Table(name = "reporte")
@@ -32,20 +29,16 @@ public class ReporteEntity implements Serializable {
 	private String idServicio;
 
 	@NotNull
-	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate fechaInicio;
 
 	@NotNull
-	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate fechaFin;
 
-	@NotEmpty
-	@FormatTime
-	private String horaInicio;
+	@NotNull
+	private LocalTime horaInicio;
 
-	@NotEmpty
-	@FormatTime
-	private String horaFin;
+	@NotNull
+	private LocalTime horaFin;
 
 	public Long getIdReporte() {
 		return idReporte;
@@ -87,19 +80,19 @@ public class ReporteEntity implements Serializable {
 		this.fechaFin = fechaFin;
 	}
 
-	public String getHoraInicio() {
+	public LocalTime getHoraInicio() {
 		return horaInicio;
 	}
 
-	public void setHoraInicio(String horaInicio) {
+	public void setHoraInicio(LocalTime horaInicio) {
 		this.horaInicio = horaInicio;
 	}
 
-	public String getHoraFin() {
+	public LocalTime getHoraFin() {
 		return horaFin;
 	}
 
-	public void setHoraFin(String horaFin) {
+	public void setHoraFin(LocalTime horaFin) {
 		this.horaFin = horaFin;
 	}
 }
