@@ -29,7 +29,7 @@ public class ReporteController {
 	public ResponseEntity<ReporteEntity> guardarReporte(@Valid @RequestBody ReporteEntity reporteEntity) {
 		reporteService.afterDate(reporteEntity);
 
-		return ResponseEntity.created(URI.create("/api/")).contentType(MediaType.APPLICATION_JSON)
+		return ResponseEntity.created(URI.create("/api")).contentType(MediaType.APPLICATION_JSON)
 				.body(reporteService.save(reporteEntity));
 	}
 
@@ -37,6 +37,6 @@ public class ReporteController {
 	public ResponseEntity<WorkingHourDto> findWorkingHour(@PathVariable String id, @PathVariable int week) {
 		WorkingHourDto workingHourDto = reporteService.CalculateWorkingHour(id, week);
 
-		return ResponseEntity.created(URI.create("/api/")).contentType(MediaType.APPLICATION_JSON).body(workingHourDto);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(workingHourDto);
 	}
 }

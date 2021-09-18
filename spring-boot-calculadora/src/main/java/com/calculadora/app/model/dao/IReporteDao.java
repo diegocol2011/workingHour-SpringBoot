@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IReporteDao extends CrudRepository<ReporteEntity,Long> {
 	
-	@Query("select r from ReporteEntity r where r.idTecnico = ?1 and r.fechaInicio >= ?2 and r.fechaFin <= ?3" )
+	@Query("select r from ReporteEntity r where r.idTecnico = ?1 and r.fechaInicio >= ?2")// and r.fechaFin <= ?3" )
 	public List<ReporteEntity> findByIdTecnicoAndFechaInicioAndFechaFin(String idTecnico, LocalDate fechaInicio, LocalDate fechaFin);
 
 

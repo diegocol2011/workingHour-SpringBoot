@@ -36,7 +36,7 @@ public class ReporteServiceImpl implements IReporteService {
 		List<ReporteEntity> reporteEntities = reporteDao.findByIdTecnicoAndFechaInicioAndFechaFin(
 				id, dateList.get(0), dateList.get(1));
 
-		return WorkingHour.CalculateWorkingHour(dateList.get(0), reporteEntities);
+		return WorkingHour.CalculateWorkingHour(reporteEntities);
 	}
 
 }

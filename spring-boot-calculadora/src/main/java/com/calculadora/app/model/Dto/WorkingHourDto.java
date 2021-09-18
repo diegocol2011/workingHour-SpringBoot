@@ -2,73 +2,73 @@ package com.calculadora.app.model.Dto;
 
 public class WorkingHourDto {
 
-	public int horaDiurna;
+	public int hourDiurnal;
 
-	public int horaDiurnaExtra;
+	public int hourDiurnalExtra;
 
-	public int horaNocturna;
+	public int hourNocturnal;
 
-	public int horaNocturnaExtra;
+	public int hourNocturnalExtra;
 
-	public int horaDominical;
+	public int hourSunday;
 
-	public int horaDominicalExtra;
-	
+	public int hourSundayExtra;
+
 	public WorkingHourDto() {
 	}
 
-	public int getHoraDiurna() {
-		return horaDiurna;
+	public int getHourDiurnal() {
+		return hourDiurnal;
 	}
 
-	public void setHoraDiurna(int horaDiurna) {
-		this.horaDiurna = horaDiurna;
+	public void setHourDiurnal(int hourDiurnal) {
+		this.hourDiurnal = hourDiurnal;
 	}
 
-	public int getHoraDiurnaExtra() {
-		return horaDiurnaExtra;
+	public int getHourDiurnalExtra() {
+		return hourDiurnalExtra;
 	}
 
-	public void setHoraDiurnaExtra(int horaDiurnaExtra) {
-		this.horaDiurnaExtra = horaDiurnaExtra;
+	public void setHourDiurnalExtra(int hourDiurnalExtra) {
+		this.hourDiurnalExtra = hourDiurnalExtra;
 	}
 
-	public int getHoraNocturna() {
-		return horaNocturna;
+	public int getHourNocturnal() {
+		return hourNocturnal;
 	}
 
-	public void setHoraNocturna(int horaNocturna) {
-		this.horaNocturna = horaNocturna;
+	public void setHourNocturnal(int hourNocturnal) {
+		this.hourNocturnal = hourNocturnal;
 	}
 
-	public int getHoraNocturnaExtra() {
-		return horaNocturnaExtra;
+	public int getHourNocturnalExtra() {
+		return hourNocturnalExtra;
 	}
 
-	public void setHoraNocturnaExtra(int horaNocturnaExtra) {
-		this.horaNocturnaExtra = horaNocturnaExtra;
+	public void setHourNocturnalExtra(int hourNocturnalExtra) {
+		this.hourNocturnalExtra = hourNocturnalExtra;
 	}
 
-	public int getHoraDominical() {
-		return horaDominical;
+	public int getHourSunday() {
+		return hourSunday;
 	}
 
-	public void setHoraDominical(int horaDominical) {
-		this.horaDominical = horaDominical;
+	public void setHourSunday(int hourSunday) {
+		this.hourSunday = hourSunday;
 	}
 
-	public int getHoraDominicalExtra() {
-		return horaDominicalExtra;
+	public int getHourSundayExtra() {
+		return hourSundayExtra;
 	}
 
-	public void setHoraDominicalExtra(int horaDominicalExtra) {
-		this.horaDominicalExtra = horaDominicalExtra;
+	public void setHourSundayExtra(int hourSundayExtra) {
+		this.hourSundayExtra = hourSundayExtra;
 	}
 
 	@Override
 	public String toString() {
-		return "WorkingHourDto [horaDiurna=" + horaDiurna + ", horaDiurnaExtra=" + horaDiurnaExtra + ", horaNocturna="
-				+ horaNocturna + ", horaNocturnaExtra=" + horaNocturnaExtra + ", horaDominical=" + horaDominical
-				+ ", horaDominicalExtra=" + horaDominicalExtra + "]";
+		return "WorkingHourDto [hourDiurnal=" + hourDiurnal + ", hourDiurnalExtra=" + hourDiurnalExtra
+				+ ", hourNocturnal=" + hourNocturnal + ", hourNocturnalExtra=" + hourNocturnalExtra + ", hourSunday="
+				+ hourSunday + ", hourSundayExtra=" + hourSundayExtra + "]";
 	}
 }

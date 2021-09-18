@@ -1,7 +1,6 @@
 package com.calculadora.app.utils;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,12 +9,10 @@ import com.calculadora.app.model.entity.ReporteEntity;
 
 public final class WorkingHour {
 
-	public static WorkingHourDto CalculateWorkingHour(LocalDate startDate, List<ReporteEntity> reporteEntities) {
-		// Lunes a sabado
-		// LocalDate unoDate = dateList.get(0);
-		// LocalDate dosDate = dateList.get(1);
+	public static WorkingHourDto CalculateWorkingHour(List<ReporteEntity> reporteEntities) {
 
-		int hd = 0, hde = 0, hn = 0, hne = 0, hdo = 0, hdoe = 0;
+		int hourDiurnal = 0, hourDiurnalExtra = 0, hourNocturnal = 0, hourNocturnalExtra = 0, hourSunday = 0,
+				hourSundayExtra = 0, regulationTime = 48;
 
 		WorkingHourDto workingHourDto = new WorkingHourDto();
 
@@ -29,42 +26,68 @@ public final class WorkingHour {
 
 			int hour = reporte.getHoraInicio().getHour();
 
+			int dayWeek = dateTimeBegin.getDayOfWeek().getValue();
+
 			for (int i = 1; i <= workingHour; i++) {
-
-				// Hour nocturnal
-				if ((hour >= 20 && hour <= 24) || (hour >= 1 && hour <= 6)) {
-					hn++;
+				if (dayWeek == 8) {
+					break;
 				}
 
-				// Hora daytime
-				if (hour >= 7 && hour <= 19) {
-					hd++;
+				if (dayWeek != 7) {
+
+					if ((hour >= 0 && hour <= 6)) {
+						hourNocturnal++;
+					}
+
+					if (hour >= 7 && hour <= 19) {
+						hourDiurnal++;
+					}
+
+					if (hour >= 20 && hour <= 23) {
+						hourNocturnal++;
+					}
+
+					hour++;
+
+					if (hour == 24) {
+						hour = 0;
+						dayWeek++;
+					}
+
+				} else {
+					if ((hour >= 0 && hour <= 23)) {
+						hourSunday++;
+					}
+
+					hour++;
+
+					if (hour == 24) {
+						hour = 0;
+						dayWeek++;
+					}
+
 				}
 
-				if (hour == 24) {
-					hour = 0;
-				}
-
-				hour++;
 			}
 
 		}
 
-		if (hd > 48) {
-			hde = hd - 48;
-			hd = hd - hde;
+		if (hourDiurnal > regulationTime) {
+			hourDiurnalExtra = hourDiurnal - regulationTime;
+			hourDiurnal -= hourDiurnalExtra;
 		}
 
-		if (hn > 48) {
-			hne = hn - 48;
-			hn = hn - hne;
+		if (hourNocturnal > regulationTime) {
+			hourNocturnalExtra = hourNocturnal - regulationTime;
+			hourNocturnal -= hourNocturnalExtra;
 		}
 
-		workingHourDto.setHoraDiurna(hd);
-		workingHourDto.setHoraDiurnaExtra(hde);
-		workingHourDto.setHoraNocturna(hn);
-		workingHourDto.setHoraNocturnaExtra(hne);
-		System.out.println(workingHourDto.toString());
+		workingHourDto.setHourDiurnal(hourDiurnal);
+		workingHourDto.setHourDiurnalExtra(hourDiurnalExtra);
+		workingHourDto.setHourNocturnal(hourNocturnal);
+		workingHourDto.setHourNocturnalExtra(hourNocturnalExtra);
+		workingHourDto.setHourSunday(hourSunday);
+		workingHourDto.setHourSundayExtra(hourSundayExtra);
 
 		return workingHourDto;
 
