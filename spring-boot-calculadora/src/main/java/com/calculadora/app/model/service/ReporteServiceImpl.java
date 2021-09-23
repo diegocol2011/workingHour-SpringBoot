@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.calculadora.app.model.Dto.WorkingHourDto;
 import com.calculadora.app.model.dao.IReporteDao;
@@ -33,10 +34,16 @@ public class ReporteServiceImpl implements IReporteService {
 	public WorkingHourDto CalculateWorkingHour(String id, int week) {
 		List<LocalDate> dateList = Convertion.WeekToDate(week);
 
-		List<ReporteEntity> reporteEntities = reporteDao.findByIdTecnicoAndFechaInicioAndFechaFin(
-				id, dateList.get(0), dateList.get(1));
+		List<ReporteEntity> reporteEntities = 
+				reporteDao.findByIdTecnicoAndFechaInicioAndFechaFin(id, dateList.get(0), dateList.get(1));
 
-		return WorkingHour.CalculateWorkingHour(reporteEntities);
+		return WorkingHour.CalculateWorkingHour(reporteEntities, dateList.get(0));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ReporteEntity> findAll() {
+		return (List<ReporteEntity>) reporteDao.findAll();
 	}
 
 }

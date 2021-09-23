@@ -1,7 +1,9 @@
 package com.calculadora.app.utils;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.calculadora.app.model.Dto.WorkingHourDto;
@@ -9,22 +11,36 @@ import com.calculadora.app.model.entity.ReporteEntity;
 
 public final class WorkingHour {
 
-	public static WorkingHourDto CalculateWorkingHour(List<ReporteEntity> reporteEntities) {
+	public static WorkingHourDto CalculateWorkingHour(List<ReporteEntity> reporteEntities, LocalDate date) {
 
-		int hourDiurnal = 0, hourDiurnalExtra = 0, hourNocturnal = 0, hourNocturnalExtra = 0, hourSunday = 0,
-				hourSundayExtra = 0, regulationTime = 48;
+		int hour = 0, hourDiurnal = 0, hourDiurnalExtra = 0, hourNocturnal = 0, hourNocturnalExtra = 0,
+				hourSunday = 0, hourSundayExtra = 0, regulationTime = 48;
 
 		WorkingHourDto workingHourDto = new WorkingHourDto();
 
-		for (ReporteEntity reporte : reporteEntities) {
+		LocalDateTime dateTimeBegin;
+		LocalDateTime dateTimeEnd;
+		LocalTime hourZero = LocalTime.of(00, 00, 00);
 
-			LocalDateTime dateTimeBegin = LocalDateTime.of(reporte.getFechaInicio(), reporte.getHoraInicio());
-			LocalDateTime dateTimeEnd = LocalDateTime.of(reporte.getFechaFin(), reporte.getHoraFin());
+		for (ReporteEntity reporte : reporteEntities) {
+			
+			//Semana inicia el lunes - semana finaliza el domingo
+			//Fecha inicio igual o despues del primer dia de la semana
+			//De lo contrario, del rango de fechas, se inicia desde el primer dia de la semana  
+			if (reporte.getFechaInicio().isEqual(date) || reporte.getFechaInicio().isAfter(date)) {
+				dateTimeBegin = LocalDateTime.of(reporte.getFechaInicio(), reporte.getHoraInicio());
+				dateTimeEnd = LocalDateTime.of(reporte.getFechaFin(), reporte.getHoraFin());
+
+				hour = reporte.getHoraInicio().getHour();
+			} else {				
+				dateTimeBegin = LocalDateTime.of(date, hourZero);
+				dateTimeEnd = LocalDateTime.of(reporte.getFechaFin(), reporte.getHoraFin());
+
+				hour = hourZero.getHour();
+			}
 
 			Duration duration = Duration.between(dateTimeBegin, dateTimeEnd);
 			long workingHour = Math.abs(duration.getSeconds()) / 3600;
-
-			int hour = reporte.getHoraInicio().getHour();
 
 			int dayWeek = dateTimeBegin.getDayOfWeek().getValue();
 
