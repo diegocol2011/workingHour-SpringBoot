@@ -13,6 +13,11 @@ public interface IReporteService {
 	
 	public WorkingHourDto CalculateWorkingHour(String id, int week);
 	
+	public ReporteEntity findById(Long id);
+	
 	public List<ReporteEntity> findAll();
 	
+	public void delete(ReporteEntity reporteEntity);
+	
+	public ReporteEntity update(ReporteEntity reporteEntity);
 }

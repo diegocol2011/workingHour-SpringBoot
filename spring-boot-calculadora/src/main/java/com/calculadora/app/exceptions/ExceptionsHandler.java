@@ -28,20 +28,6 @@ public class ExceptionsHandler {
 		return errors;
 	}
 
-	/*
-	 * @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	 * 
-	 * @ExceptionHandler(HttpMessageNotReadableException.class) public Map<String,
-	 * String> handleHttpMessageNotReadableException(HttpMessageNotReadableException
-	 * exception) { Map<String, String> errors = new HashMap<>();
-	 * 
-	 * if
-	 * (exception.getMostSpecificCause().getClass().equals(DateTimeParseException.
-	 * class)) { errors.put("Fecha",
-	 * "Las fechas deben tener el formato yyyy-MM-dd"); return errors; } return
-	 * errors; }
-	 */
-
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(DateTimeParseException.class)
 	public Map<String, String> handleException(DateTimeParseException exception) {
