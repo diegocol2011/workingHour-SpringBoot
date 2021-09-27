@@ -36,10 +36,9 @@ public class ReporteServiceImpl implements IReporteService {
 	public WorkingHourDto CalculateWorkingHour(String id, int week) {
 		List<LocalDate> dateList = Convertion.WeekToDate(week);
 
-		List<ReporteEntity> reporteEntities = reporteDao.findByIdTecnicoAndFechaInicioAndFechaFin(id, dateList.get(0),
-				dateList.get(1));
+		List<ReporteEntity> reporteEntities = reporteDao.findByIdTecnico(id);
 
-		return WorkingHour.CalculateWorkingHour(reporteEntities, dateList.get(0));
+		return WorkingHour.CalculateWorkingHour(reporteEntities, dateList.get(0), dateList.get(1));
 	}
 
 	@Override
@@ -47,7 +46,7 @@ public class ReporteServiceImpl implements IReporteService {
 	public ReporteEntity findById(Long id) {
 		return reporteDao.findById(id).orElse(null);
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<ReporteEntity> findAll() {
