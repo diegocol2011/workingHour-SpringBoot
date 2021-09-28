@@ -59,41 +59,92 @@ class SpringBootCalculadoraApplicationTests {
 	@Test
 	public void findWorkHour() throws Exception {
 			
-		ReporteEntity reporteEntity = new ReporteEntity();
-		reporteEntity.setIdTecnico("4789");
-		reporteEntity.setIdServicio("234");
-		reporteEntity.setFechaInicio(LocalDate.parse("2021-09-06"));
-		reporteEntity.setFechaFin(LocalDate.parse("2021-09-12"));
-		reporteEntity.setHoraInicio(LocalTime.parse("10:00"));
-		reporteEntity.setHoraFin(LocalTime.parse("09:00"));
+		ReporteEntity reporteEntityUno = new ReporteEntity();
+		reporteEntityUno.setIdTecnico("4789");
+		reporteEntityUno.setIdServicio("234");
+		reporteEntityUno.setFechaInicio(LocalDate.parse("2021-09-06"));
+		reporteEntityUno.setFechaFin(LocalDate.parse("2021-09-07"));
+		reporteEntityUno.setHoraInicio(LocalTime.parse("14:16"));
+		reporteEntityUno.setHoraFin(LocalTime.parse("14:16"));
 		
-		MvcResult resultSave = mvc.perform(MockMvcRequestBuilders.post(url + "/save")
+		MvcResult resultSaveUno = mvc.perform(MockMvcRequestBuilders.post(url + "/save")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(reporteEntity)))
+				.content(objectMapper.writeValueAsString(reporteEntityUno)))
 				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$.idReporte").exists())
 				.andReturn();
 		
-		ReporteEntity resultEntity = objectMapper.readValue(resultSave.getResponse().getContentAsString(),
+		ReporteEntity resultEntityUno = objectMapper.readValue(resultSaveUno.getResponse().getContentAsString(),
+				ReporteEntity.class);
+		
+		
+		ReporteEntity reporteEntityDos = new ReporteEntity();
+		reporteEntityDos.setIdTecnico("4789");
+		reporteEntityDos.setIdServicio("234");
+		reporteEntityDos.setFechaInicio(LocalDate.parse("2021-09-07"));
+		reporteEntityDos.setFechaFin(LocalDate.parse("2021-09-08"));
+		reporteEntityDos.setHoraInicio(LocalTime.parse("15:00"));
+		reporteEntityDos.setHoraFin(LocalTime.parse("15:00"));
+		
+		MvcResult resultSaveDos = mvc.perform(MockMvcRequestBuilders.post(url + "/save")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(reporteEntityDos)))
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.idReporte").exists())
+				.andReturn();
+		
+		ReporteEntity resultEntityDos = objectMapper.readValue(resultSaveDos.getResponse().getContentAsString(),
+				ReporteEntity.class);
+		
+		
+		ReporteEntity reporteEntityTres = new ReporteEntity();
+		reporteEntityTres.setIdTecnico("4789");
+		reporteEntityTres.setIdServicio("234");
+		reporteEntityTres.setFechaInicio(LocalDate.parse("2021-09-12"));
+		reporteEntityTres.setFechaFin(LocalDate.parse("2021-09-13"));
+		reporteEntityTres.setHoraInicio(LocalTime.parse("14:00"));
+		reporteEntityTres.setHoraFin(LocalTime.parse("14:00"));
+		
+		MvcResult resultSaveTres = mvc.perform(MockMvcRequestBuilders.post(url + "/save")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(reporteEntityTres)))
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.idReporte").exists())
+				.andReturn();
+		
+		ReporteEntity resultEntityTres = objectMapper.readValue(resultSaveTres.getResponse().getContentAsString(),
 				ReporteEntity.class);
 
+		
 		mvc.perform(MockMvcRequestBuilders.get(url + "/find/4789/36")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.hourDiurnal", is(48)))
-				.andExpect(jsonPath("$.hourDiurnalExtra", is(27)))
-				.andExpect(jsonPath("$.hourNocturnal", is(48)))
-				.andExpect(jsonPath("$.hourNocturnalExtra", is(11)))
-				.andExpect(jsonPath("$.hourSunday", is(9)))
-				.andExpect(jsonPath("$.hourSundayExtra", is(0)))
+				.andExpect(jsonPath("$.hourDiurnal", is(26)))
+				.andExpect(jsonPath("$.hourDiurnalExtra", is(1)))
+				.andExpect(jsonPath("$.hourNocturnal", is(22)))
+				.andExpect(jsonPath("$.hourNocturnalExtra", is(0)))
+				.andExpect(jsonPath("$.hourSunday", is(0)))
+				.andExpect(jsonPath("$.hourSundayExtra", is(10)))
+				.andReturn();
+		
+		
+		mvc.perform(MockMvcRequestBuilders.delete(url + "/delete")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(resultEntityUno)))
+				.andExpect(status().isNoContent())
 				.andReturn();
 		
 		mvc.perform(MockMvcRequestBuilders.delete(url + "/delete")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(resultEntity)))
+				.content(objectMapper.writeValueAsString(resultEntityDos)))
 				.andExpect(status().isNoContent())
 				.andReturn();
 		
+		mvc.perform(MockMvcRequestBuilders.delete(url + "/delete")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(resultEntityTres)))
+				.andExpect(status().isNoContent())
+				.andReturn();
 	}
 
 }
